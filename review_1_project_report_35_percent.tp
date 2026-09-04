@@ -1,0 +1,137 @@
+# Review 1 Project Report: ColdChain Insight 🐟❄️
+### Milestone Evaluation: 35% Project Completion
+**Project Title**: Cold-Chain Sensor-Gap Reconstruction & Confidence Tool  
+**Industry Domain**: Seafood Export Supply Chain Analytics & Telemetry Quality Control  
+**Document Type**: Review 1 Progress Milestone Evaluation  
+
+---
+
+## 📌 1. Milestone Overview & Summary (35% Completion)
+
+This **Review 1 Report** documents the completion of the **Foundation & Ingestion Phase (~35% Milestone)** for **ColdChain Insight**. 
+
+Cold-chain logistics for perishable seafood exports (such as sashimi-grade yellowfin tuna, Atlantic salmon, and live crustaceans) require continuous temperature maintenance within strict bounds (-2°C to +2°C for chilled; -20°C for deep-frozen). During multimodal transit handovers—such as tarmac transfers, customs bonded inspections, or metal-shielded container yards—wireless IoT sensors frequently suffer telemetry blackouts (gaps).
+
+The primary objective of **Review 1** was to design and deploy the core application shell, domain-specific data structures, and a realistic multi-sensor telemetry simulation layer capable of generating reproducible sensor logs with known ground truth.
+
+**Milestone Completion Target**: **35% Achieved & Operational**
+
+---
+
+## 🚀 2. What Has Been Completed So Far
+
+Under the Review 1 milestone scope, the following core foundational engineering phases have been completed:
+
+### 1. Enterprise Application Shell & UI Architecture (Phase 1)
+- Built a desktop-first Single Page Application (SPA) using **React 18** and **TypeScript 5**.
+- Designed a dark logistics UI theme using **Tailwind CSS** with high visual hierarchy and responsive dashboard cards.
+- Integrated client-side page routing across key application views (`Executive Dashboard`, `Shipments Directory`, `Shipment Details`, `Sensor Monitoring`, `Gap Analysis`, `Reconstruction Engine`, `Data Simulator`).
+
+### 2. Cold-Chain Sensor Telemetry & Simulation Layer (Phase 2)
+- Implemented a seedable **Mulberry32 Pseudorandom Number Generator (`seed = 42`)** ensuring 100% reproducible simulated shipment data.
+- Modeled **5 realistic seafood export shipments** traveling through 6 physical multimodal transport legs:
+  1. `Warehouse` (Initial cold storage)
+  2. `Port Gate` (Tarmac transfer & loading)
+  3. `Truck` (Active reefer container transport)
+  4. `Vessel / Aircraft` (Main long-haul transit hold)
+  5. `Customs` (Bonded inspection area)
+  6. `Destination Warehouse` (Receiving bay)
+- Configured 6 virtual sensor streams per shipment measuring 12 physical and operational parameters at 1–5 minute ping intervals.
+
+---
+
+## 🛠️ 3. Key Features, Modules & Hardware Components Completed
+
+### A. Software Modules Completed
+
+| Module Name | Description & Capabilities | Completion Status |
+| :--- | :--- | :---: |
+| **1. Application Shell & Router** | Responsive container layout, sidebar navigation, top header status indicators | ✅ Complete (100%) |
+| **2. Seedable PRNG Engine** | Deterministic random generator for reproducible simulation test runs | ✅ Complete (100%) |
+| **3. Telemetry Ingestion Layer** | Handles multi-sensor reading streams, packet parsing, and state tracking | ✅ Complete (100%) |
+| **4. Executive Fleet Dashboard** | Displays fleet metrics, active shipment counts, and live telemetry chart | ✅ Complete (100%) |
+| **5. Data Preview & Simulator Inspector** | Interactive simulation control panel (`Play`, `Pause`, `Reset`, `Step`) | ✅ Complete (100%) |
+
+### B. Virtual Sensor Node Array (Hardware Components Simulated)
+
+Each simulated shipment is monitored by an array of 6 distinct IoT sensor hardware devices:
+
+1. **Primary Reefer IoT Gateway (`sns-sim-xxx-1`)**: High-precision internal temperature & humidity probe mounted inside the primary container.
+2. **Secondary BLE Thermal Logger (`sns-sim-xxx-2`)**: Pallet-level Bluetooth Low Energy temperature logging tag.
+3. **Container Door Contact Sensor (`sns-sim-xxx-3`)**: Hall-effect magnetic door sensor logging open/close events.
+4. **Shock & Vibration Transducer (`sns-sim-xxx-4`)**: 3-axis accelerometer recording mechanical shocks (g) and tilt angles (°).
+5. **Satellite / Cellular Telematics Unit (`sns-sim-xxx-5`)**: Long-range GPS and RSSI signal tracker monitoring connectivity status.
+6. **Battery & Diagnostics Controller (`sns-sim-xxx-6`)**: Power management node tracking battery voltage decay and internal device clock skew.
+
+### C. Data Reading Schema
+
+Every generated telemetry ping contains 12 parameters:
+```typescript
+interface SensorReading {
+  shipmentId: string;
+  sensorId: string;
+  timestamp: string;
+  temperature: number;      // °C
+  humidity: number;         // %
+  shock: number;            // g-force
+  tilt: number;             // degrees
+  latitude: number;         // GPS coord
+  longitude: number;        // GPS coord
+  signalStrength: number;   // dBm
+  batteryLevel: number;     // %
+  connectivityStatus: 'Observed' | 'Dropped' | 'Buffered' | 'Unknown';
+}
+```
+
+---
+
+## ⚡ 4. What Is Currently Working (Live System Verification)
+
+The following components are fully functional and verifiable in the live application:
+
+1. **Interactive Fleet Dashboard**: Renders live KPIs (`Active Shipments`, `Sensors Online`, `Fleet Telemetry Stream`) with real-time updating charts.
+2. **Deterministic Data Generator**: Running `generateSensorReadings('shp-sim-101')` reliably outputs 200+ telemetry points per shipment with realistic thermal rise during tarmac handovers.
+3. **Data Preview & Simulator Inspector View**: Users can select individual shipments, view raw readings, inspect ground truth values, and analyze sensor packet delivery status badges (`Observed`, `Dropped`, `Buffered`, `Unknown`).
+4. **Local Development Environment**: Runs locally at **`http://localhost:3000/`** with 0 external paid API dependencies.
+5. **Compilation & Type Safety**: Clean TypeScript compilation (`npm run typecheck`) and production build bundling (`npm run build`).
+
+---
+
+## 📅 5. Pending Work & Next Steps Roadmap (Remaining 65%)
+
+The remaining **65% of the project scope** is planned across two subsequent evaluation milestones:
+
+```
+[ REVIEW 1 (35%) ]  ───►  [ REVIEW 2 (70%) ]  ───►  [ FINAL / REVIEW 3 (100%) ]
+Foundational Shell        Gap Detection Engine      Polished Confidence Timeline
+Telemetry Simulator       Reconstruction Solver      QA Compliance Workflow & UI
+```
+
+### A. Review 2 Target (35% ──► 70% Milestone)
+1. **Automated 9-Pattern Sensor Gap Detection Engine (Phase 3)**:
+   - Implement time-series detection logic for missing pings, short/long gaps, entire-leg dropouts, network outages, low RSSI, clock skew, noisy spikes, calibration drift, and conflicting sensors.
+   - Construct formal `Gap` objects with last known temperature, preceding/following trends, and severity scores.
+2. **Layered 6-Level Reconstruction & Transparent Confidence Engine (Phase 4)**:
+   - Implement the hierarchical thermal solver (`INTERPOLATION`, `TREND_ESTIMATION`, `CORRELATED_SENSOR`, `JOURNEY_CONTEXT`, `CONFLICT_WIDENED`, `UNRECOVERABLE`).
+   - Implement the transparent confidence score calculation formula and 95% uncertainty bounds (`lowerBound`, `upperBound`).
+   - Establish strict handling for Level 6 unrecoverable gaps (`estimatedTemperature = null`).
+   - Create automated 19-test unit test suite (`reconstructionEngine.test.ts`).
+
+### B. Final / Review 3 Target (70% ──► 100% Milestone)
+1. **Polished Interactive Dual-Line Confidence Timeline (Phase 5)**:
+   - Implement Recharts dual-line visualization (`#06b6d4` solid cyan observed vs `#c084fc` dashed purple reconstructed) with shaded 95% confidence bands and transport stage markers.
+2. **7 Summary Metric Cards & QA Compliance Table**:
+   - Build metrics for Observed %, Reconstructed %, Unknown %, Peak Temp, Lowest Confidence %, Longest Gap, and Potential Exposure mins.
+   - Construct non-alarmist QA uncertain periods handling table (*"Possible exposure — verify on arrival"*).
+
+---
+
+## 📊 Summary Review 1 Scorecard
+
+| Evaluation Criterion | Benchmark Target | Achieved Level | Verification Method |
+| :--- | :--- | :--- | :--- |
+| **System Architecture** | Modular React + TypeScript | 100% Complete | Codebase inspection & routing |
+| **Data Simulation** | Seedable PRNG multi-sensor log | 100% Complete | `seed = 42` Mulberry32 generator |
+| **UI Responsiveness** | Dark logistics dashboard | 100% Complete | Live server preview (`:3000`) |
+| **Type Integrity** | TypeScript strict mode | 100% Clean | `npm run typecheck` (0 errors) |
+| **Overall Milestone** | **Review 1 (35%) Target** | **35% Achieved** | **Verified & Ready for Review 1** |
