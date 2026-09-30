@@ -7,7 +7,13 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:reconstruction": "npx tsx src/services/reconstruction/__tests__/reconstructionEngine.test.ts",
+    "test:alerts": "npx tsx src/services/alerts/__tests__/alertEngine.test.ts",
+    "test:store-and-forward": "npx tsx src/services/storeAndForward/__tests__/storeAndForwardEngine.test.ts",
+    "test:workload": "npx tsx src/services/workload/__tests__/workloadEngine.test.ts",
+    "test:comparison": "npx tsx src/services/comparison/__tests__/comparisonEngine.test.ts",
+    "test": "npx tsx src/services/reconstruction/__tests__/reconstructionEngine.test.ts && npx tsx src/services/alerts/__tests__/alertEngine.test.ts && npx tsx src/services/storeAndForward/__tests__/storeAndForwardEngine.test.ts && npx tsx src/services/workload/__tests__/workloadEngine.test.ts && npx tsx src/services/comparison/__tests__/comparisonEngine.test.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",

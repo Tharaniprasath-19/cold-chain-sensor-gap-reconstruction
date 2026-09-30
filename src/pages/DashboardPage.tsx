@@ -1,10 +1,12 @@
 import React from 'react';
-import { Shipment, Sensor, Gap, Alert } from '../types';
+import { Shipment, Sensor, Gap, Alert, SensorReading, Worker, WorkloadTask } from '../types';
 import { KPICard } from '../components/KPICard';
 import { ShipmentTable } from '../components/ShipmentTable';
 import { EventCard } from '../components/EventCard';
 import { generateSensorReadings } from '../data/mockData';
 import { PageKey } from '../components/Sidebar';
+import { initialMockTasks } from '../services/workload/workloadEngine';
+import { mockWorkers } from '../data/mockData';
 import { 
   Ship, 
   Radio, 
@@ -13,7 +15,11 @@ import {
   AlertTriangle, 
   ShieldCheck, 
   Clock, 
-  ArrowRight 
+  ArrowRight,
+  HelpCircle,
+  Users,
+  Inbox,
+  AlertCircle
 } from 'lucide-react';
 import { 
   ResponsiveContainer, 
@@ -30,6 +36,9 @@ interface DashboardPageProps {
   sensors: Sensor[];
   gaps: Gap[];
   alerts: Alert[];
+  readings?: SensorReading[];
+  workers?: Worker[];
+  tasks?: WorkloadTask[];
   onSelectShipment: (id: string) => void;
   onNavigate: (page: PageKey) => void;
 }
@@ -39,22 +48,52 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
   sensors,
   gaps,
   alerts,
+  readings = [],
+  workers = mockWorkers,
+  tasks = initialMockTasks,
   onSelectShipment,
   onNavigate,
 }) => {
-  // Dynamic KPI Calculations from Simulated Telemetry & Gaps Dataset
-  const activeShipmentsCount = shipments.length;
+  // 1. Total Shipments
+  const totalShipments = shipments.length;
+
+  // 2. Sensors Online & Total
   const sensorsOnlineCount = sensors.filter(s => s.status === 'Healthy' || s.status === 'Observed' || s.status === 'Warning').length;
+  const totalSensors = sensors.length;
+
+  // 3. Detected Gaps
   const totalGapsCount = gaps.length;
-  const reconstructedCount = gaps.filter(g => g.gapType !== 'DEAD_SENSOR').length;
-  const highRiskCount = shipments.filter(s => s.riskLevel === 'High' || s.riskLevel === 'Critical' || s.temperatureStatus === 'Warning' || s.temperatureStatus === 'Critical').length;
-  
+
+  // 4. Reconstructed Minutes
+  const reconstructedGaps = gaps.filter(g => g.gapType !== 'DEAD_SENSOR' && g.thermalRisk !== 'Unknown');
+  const reconstructedMinutes = reconstructedGaps.reduce((acc, g) => acc + g.durationMinutes, 0);
+
+  // 5. Unknown Minutes
+  const unknownGaps = gaps.filter(g => g.gapType === 'DEAD_SENSOR' || g.thermalRisk === 'Unknown');
+  const unknownMinutes = unknownGaps.reduce((acc, g) => acc + g.durationMinutes, 0);
+
+  // 6. Confirmed Exposures
+  const confirmedExposuresCount = alerts.filter(a => a.status === 'CONFIRMED_EXPOSURE').length;
+
+  // 7. Possible Exposures
+  const possibleExposuresCount = alerts.filter(a => a.status === 'POSSIBLE_EXPOSURE').length;
+
+  // 8. Average Confidence
   const avgConfidence = shipments.length > 0 
     ? (shipments.reduce((acc, s) => acc + s.confidence, 0) / shipments.length).toFixed(1)
     : '87.5';
 
+  // 9. Worker Tasks
+  const totalWorkerTasks = workers.reduce((acc: number, w: Worker) => acc + w.currentTasks, 0);
+
+  // 10. Queued Tasks
+  const totalQueuedTasks = tasks.filter(t => t.status === 'QUEUED' || t.status === 'UNASSIGNED').length;
+
   // Generate chart readings for top selected shipment
-  const sampleReadings = generateSensorReadings(shipments[0]?.id || 'shp-sim-101');
+  const sampleReadings = readings.length > 0 
+    ? readings.filter(r => r.shipmentId === shipments[0]?.id).slice(0, 40)
+    : generateSensorReadings(shipments[0]?.id || 'shp-sim-101');
+
   const chartData = sampleReadings.map(r => ({
     time: new Date(r.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     temperature: r.temperature,
@@ -83,7 +122,7 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             className="px-3.5 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-lg text-xs font-medium text-slate-200 transition-colors flex items-center gap-2"
           >
             <Activity className="w-4 h-4 text-amber-400" />
-            <span>Analyze {totalGapsCount} Sensor Gaps</span>
+            <span>Analyze {totalGapsCount} Gaps</span>
           </button>
 
           <button 
@@ -91,65 +130,122 @@ export const DashboardPage: React.FC<DashboardPageProps> = ({
             className="px-3.5 py-2 bg-cyan-600 hover:bg-cyan-500 rounded-lg text-xs font-medium text-slate-950 font-semibold shadow-lg shadow-cyan-950/50 transition-all flex items-center gap-2"
           >
             <Sparkles className="w-4 h-4 text-slate-950" />
-            <span>Run Reconstruction Engine</span>
+            <span>Run Reconstruction</span>
           </button>
         </div>
       </div>
 
-      {/* 6 KPI Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4">
-        <KPICard
-          title="Active Shipments"
-          value={activeShipmentsCount}
-          subtitle="6 Exports In-Transit"
-          icon={Ship}
-          variant="cyan"
-          onClick={() => onNavigate('shipments')}
-        />
+      {/* 10 Dynamic KPI Cards Grid (5x2 Responsive Matrix) */}
+      <div className="space-y-3">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+            Fleet Operations & Thermal Analytics (10 Dynamic KPIs)
+          </h3>
+          <span className="text-[10px] font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800 px-2 py-0.5 rounded">
+            Programmatically Calculated
+          </span>
+        </div>
 
-        <KPICard
-          title="Sensors Online"
-          value={`${sensorsOnlineCount}/${sensors.length}`}
-          subtitle="97.8% Fleet Health"
-          icon={Radio}
-          variant="emerald"
-          onClick={() => onNavigate('sensors')}
-        />
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5">
+          {/* 1. Total Shipments */}
+          <KPICard
+            title="Total Shipments"
+            value={totalShipments}
+            subtitle="Active Consignments"
+            icon={Ship}
+            variant="cyan"
+            onClick={() => onNavigate('shipments')}
+          />
 
-        <KPICard
-          title="Sensor Gaps"
-          value={totalGapsCount}
-          subtitle="4 Dropouts Recorded"
-          icon={Activity}
-          variant="amber"
-          onClick={() => onNavigate('gap-analysis')}
-        />
+          {/* 2. Sensors */}
+          <KPICard
+            title="Sensors Online"
+            value={`${sensorsOnlineCount}/${totalSensors}`}
+            subtitle="Active Fleet Probes"
+            icon={Radio}
+            variant="emerald"
+            onClick={() => onNavigate('sensors')}
+          />
 
-        <KPICard
-          title="Reconstructed"
-          value={reconstructedCount}
-          subtitle="3 Periods Restored"
-          icon={Sparkles}
-          variant="purple"
-          onClick={() => onNavigate('reconstruction')}
-        />
+          {/* 3. Detected Gaps */}
+          <KPICard
+            title="Detected Gaps"
+            value={totalGapsCount}
+            subtitle="Telemetry Dropouts"
+            icon={Activity}
+            variant="amber"
+            onClick={() => onNavigate('gap-analysis')}
+          />
 
-        <KPICard
-          title="High Risk Periods"
-          value={highRiskCount}
-          subtitle="2 Shipments Warning"
-          icon={AlertTriangle}
-          variant="rose"
-          onClick={() => onNavigate('alerts')}
-        />
+          {/* 4. Reconstructed Minutes */}
+          <KPICard
+            title="Reconstructed"
+            value={`${reconstructedMinutes}m`}
+            subtitle="Estimated Profile Time"
+            icon={Sparkles}
+            variant="purple"
+            onClick={() => onNavigate('reconstruction')}
+          />
 
-        <KPICard
-          title="Avg Confidence"
-          value={`${avgConfidence}%`}
-          subtitle="Target: >85.0%"
-          icon={ShieldCheck}
-          variant="blue"
-        />
+          {/* 5. Unknown Minutes */}
+          <KPICard
+            title="Unknown Minutes"
+            value={`${unknownMinutes}m`}
+            subtitle="Explicit Blackouts"
+            icon={HelpCircle}
+            variant="blue"
+            onClick={() => onNavigate('gap-analysis')}
+          />
+
+          {/* 6. Confirmed Exposures */}
+          <KPICard
+            title="Confirmed Alerts"
+            value={confirmedExposuresCount}
+            subtitle="Immediate Action"
+            icon={AlertTriangle}
+            variant="rose"
+            onClick={() => onNavigate('alerts')}
+          />
+
+          {/* 7. Possible Exposures */}
+          <KPICard
+            title="Possible Alerts"
+            value={possibleExposuresCount}
+            subtitle="Arrival Probe Check"
+            icon={AlertCircle}
+            variant="amber"
+            onClick={() => onNavigate('alerts')}
+          />
+
+          {/* 8. Average Confidence */}
+          <KPICard
+            title="Avg Confidence"
+            value={`${avgConfidence}%`}
+            subtitle="Fleet Uncertainty Mean"
+            icon={ShieldCheck}
+            variant="blue"
+          />
+
+          {/* 9. Worker Tasks */}
+          <KPICard
+            title="Worker Tasks"
+            value={totalWorkerTasks}
+            subtitle="Assigned Across Field"
+            icon={Users}
+            variant="cyan"
+            onClick={() => onNavigate('workload')}
+          />
+
+          {/* 10. Queued Tasks */}
+          <KPICard
+            title="Queued Tasks"
+            value={totalQueuedTasks}
+            subtitle="Safeguarded Buffer"
+            icon={Inbox}
+            variant="purple"
+            onClick={() => onNavigate('workload')}
+          />
+        </div>
       </div>
 
       {/* Main Grid: Chart + Events Side Panel */}

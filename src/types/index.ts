@@ -286,25 +286,369 @@ export interface CalibrationRecord {
   notes?: string;
 }
 
+export type WorkerRole = 'Driver' | 'Dock Worker' | 'Warehouse Worker' | 'Supervisor';
+
+export type WorkloadStatus = 'AVAILABLE' | 'NEAR_CAPACITY' | 'AT_CAPACITY' | 'OFF_SHIFT';
+
 export interface Worker {
   id: string;
   name: string;
-  role: string; // e.g. "Cold Chain Logistics Officer", "QA Specialist"
-  department: string;
-  location: string;
-  contact: string;
-  activeShipmentsCount: number;
+  role: WorkerRole | string;
+  shift: string;
+  currentTasks: number;
+  completedTasks: number;
+  workloadCapacity: number;
+  hoursWorked: number;
+  availability: boolean;
+  status: WorkloadStatus;
+  department?: string;
+  location?: string;
+  contact?: string;
+  activeShipmentsCount?: number;
+  assignedTaskIds?: string[];
 }
+
+export type AlertClassification = 
+  | 'CONFIRMED_EXPOSURE'
+  | 'POSSIBLE_EXPOSURE'
+  | 'LOW_CONFIDENCE_ANOMALY'
+  | 'NO_ALERT';
+
+export type AlertSource = 'Observed' | 'Reconstructed' | 'Hybrid';
 
 export interface Alert {
   id: string;
   shipmentId: string;
-  shipmentCode: string;
-  sensorId?: string;
-  severity: 'Critical' | 'Warning' | 'Info';
-  title: string;
-  description: string;
-  timestamp: string;
-  status: 'Active' | 'Acknowledged' | 'Resolved';
+  sensorId: string;
+  startTime: string;
+  endTime: string;
+  durationMinutes: number;
+  maximumTemperature: number;
+  threshold: number;
+  confidence: number; // 0 to 100 percentage
+  status: AlertClassification | 'Active' | 'Acknowledged' | 'Resolved';
+  source: AlertSource;
+  reason: string;
+  recommendedAction: string;
+
+  // Compatibility and display helper properties
+  shipmentCode?: string;
+  severity?: 'Critical' | 'Warning' | 'Info';
+  title?: string;
+  description?: string;
+  timestamp?: string;
   triggerValue?: string;
+  isFalseAlarmCandidate?: boolean;
 }
+
+export interface AlertConfig {
+  temperatureThreshold: number; // e.g. 5.0 °C
+  exposureDurationMinutes: number; // e.g. 20 minutes
+  minConfidenceThreshold: number; // e.g. 75 %
+  useShipmentTargetMax?: boolean;
+  shipmentId?: string; // 'all' or specific shipment id
+}
+
+export interface ThresholdTradeoffPoint {
+  threshold: number;
+  falsePositives: number;
+  falseNegatives: number;
+  truePositives: number;
+  trueNegatives: number;
+  falsePositiveRate: number; // percentage 0 - 100
+  falseNegativeRate: number; // percentage 0 - 100
+  confirmedExposures: number;
+  possibleExposures: number;
+  lowConfidenceCount: number;
+  totalAlerts: number;
+}
+
+export interface SensorReliabilityMetrics {
+  sensorId: string;
+  reliabilityScore: number; // 0.0 to 1.0
+  calibrationFactor: number;
+  batteryFactor: number;
+  signalFactor: number;
+  isReliable: boolean;
+  notes: string;
+}
+
+export type StoreAndForwardState = 
+  | 'CONNECTED'
+  | 'NETWORK_OFFLINE'
+  | 'BUFFERING_LOCALLY'
+  | 'NETWORK_RESTORED'
+  | 'SYNCING'
+  | 'SYNC_COMPLETE';
+
+export interface BufferedReading {
+  id: string;
+  sensorId: string;
+  shipmentId: string;
+  recordedTimestamp: string;
+  temperature: number;
+  groundTruthTemp: number;
+  syncTimestamp?: string;
+  isSynced: boolean;
+}
+
+export interface StoreAndForwardSession {
+  sensorId: string;
+  shipmentId: string;
+  state: StoreAndForwardState;
+  bufferedReadings: BufferedReading[];
+  syncedReadings: SensorReading[];
+  syncCount: number;
+  syncLagSeconds: number; // delay in seconds
+  lastSuccessfulSync: string | null;
+  outageStartTime: string | null;
+  networkRestoredTime: string | null;
+  excursionDetectedDuringOutage: boolean;
+  peakExcursionTemp: number | null;
+}
+
+export type FailureScenarioId = 
+  | 'SCENARIO_1_TOTAL_DROPOUT'
+  | 'SCENARIO_2_MISCALIBRATED_SENSOR'
+  | 'SCENARIO_3_CONFLICTING_SENSORS'
+  | 'SCENARIO_4_OUTAGE_EXCURSION';
+
+export interface FailureScenarioReport {
+  scenarioId: FailureScenarioId;
+  scenarioTitle: string;
+  expectedBehavior: string;
+  actualBehavior: string;
+  confidenceScore: number; // 0 to 100
+  dataAvailability: string;
+  riskInterpretation: string;
+  metrics: Record<string, string | number>;
+}
+
+export type TaskType = 
+  | 'Arrival verification'
+  | 'Container inspection'
+  | 'Temperature verification'
+  | 'Documentation check'
+  | 'Supervisor review';
+
+export type TaskPriority = 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+
+export type TaskStatus = 'UNASSIGNED' | 'ASSIGNED' | 'QUEUED' | 'ESCALATED' | 'COMPLETED' | 'BLOCKED';
+
+export interface WorkloadTask {
+  id: string;
+  type: TaskType;
+  shipmentId: string;
+  alertId?: string;
+  priority: TaskPriority;
+  createdAt: string;
+  assignedWorkerId?: string;
+  assignedWorkerName?: string;
+  assignedWorkerRole?: WorkerRole | string;
+  status: TaskStatus;
+  description: string;
+  estimatedMinutes?: number;
+  blockingReason?: string;
+}
+
+export type AssignmentResolution = 'ASSIGNED' | 'BLOCKED_CAPACITY' | 'QUEUED' | 'ESCALATED' | 'DEFERRED';
+
+export interface AssignmentAuditRecord {
+  id: string;
+  taskId: string;
+  alertId?: string;
+  workerId?: string;
+  workerName?: string;
+  workerRole?: WorkerRole | string;
+  assignmentTime: string;
+  reason: string;
+  workloadBefore: number; // percentage (0 - 100)
+  workloadAfter: number;  // percentage (0 - 100)
+  assignmentStatus: AssignmentResolution;
+  safeguardTriggered?: boolean;
+}
+
+export interface WorkloadSummaryMetrics {
+  totalWorkers: number;
+  availableWorkers: number;
+  nearCapacityWorkers: number;
+  atCapacityWorkers: number;
+  offShiftWorkers: number;
+  queuedTasksCount: number;
+  escalatedTasksCount: number;
+}
+
+// ==========================================
+// PHASE 9: Before-vs-After Comparison Types
+// ==========================================
+
+export interface ProcessMetrics {
+  name: string;
+  mae: number;
+  rmse: number;
+  uncertainExposureMinutes: number;
+  riskWeightedExposure: number;
+  falseAlerts: number;
+  confirmedAlerts: number;
+  possibleAlerts: number;
+  unknownMinutes: number;
+  averageConfidence: number; // 0 to 100 percentage
+  workerVerificationTasks: number;
+}
+
+export type GapLengthCategory = '0–10 min' | '10–30 min' | '30–60 min' | '60+ min';
+
+export interface GapLengthErrorItem {
+  category: GapLengthCategory;
+  sampleCount: number;
+  baselineMae: number;
+  proposedMae: number;
+  baselineRmse: number;
+  proposedRmse: number;
+}
+
+export interface SubgroupErrorItem {
+  groupName: string;
+  baselineMae: number;
+  proposedMae: number;
+  sampleCount: number;
+  description: string;
+}
+
+export interface ConfidenceCoverageResult {
+  expectedCoverage: number; // e.g. 90.0%
+  observedCoverage: number; // calculated percentage
+  totalPointsEvaluated: number;
+  pointsWithinInterval: number;
+  pointsOutsideInterval: number;
+}
+
+export interface ErrorConfidencePoint {
+  id: string;
+  timestamp: string;
+  confidence: number; // 0 to 100%
+  absoluteError: number; // °C
+  groundTruthTemp: number;
+  estimatedTemp: number;
+  gapDurationMinutes: number;
+}
+
+export interface ModelWeaknessItem {
+  weakness: string;
+  condition: string;
+  description: string;
+  baselineMae: number;
+  proposedMae: number;
+  mitigationRecommendation: string;
+}
+
+export interface BeforeAfterExperimentReport {
+  seed: number;
+  executionTimestamp: string;
+  totalShipments: number;
+  totalGaps: number;
+  totalGapMinutes: number;
+  reconstructedMinutes: number;
+  unknownMinutes: number;
+  baseline: ProcessMetrics;
+  proposed: ProcessMetrics;
+  confidenceCoverage: ConfidenceCoverageResult;
+  gapLengthErrors: GapLengthErrorItem[];
+  subgroupErrors: {
+    calibration: SubgroupErrorItem[];
+    neighborSensors: SubgroupErrorItem[];
+    thermalDynamics: SubgroupErrorItem[];
+    sensorConflict: SubgroupErrorItem[];
+  };
+  errorVsConfidenceScatter: ErrorConfidencePoint[];
+  weaknessesAndLimitations: ModelWeaknessItem[];
+}
+
+// ==========================================
+// PHASE 10: RISK, ASSUMPTIONS, ARCHITECTURE & SCHEMAS
+// ==========================================
+
+export type RiskLikelihood = 'Low' | 'Medium' | 'High';
+export type RiskImpact = 'Low' | 'Medium' | 'High' | 'Critical';
+export type ResidualRisk = 'Low' | 'Medium' | 'High';
+
+export interface RiskItem {
+  id: string;
+  risk: string;
+  category: 'Algorithmic' | 'Hardware' | 'Operational' | 'Environmental' | 'Data Integrity' | 'Simulation';
+  likelihood: RiskLikelihood;
+  impact: RiskImpact;
+  mitigation: string;
+  detectionMethod: string;
+  residualRisk: ResidualRisk;
+  owner: string;
+  regulatoryStandard?: string;
+}
+
+export interface AssumptionItem {
+  id: string;
+  category: 'Sensor' | 'Network' | 'Calibration' | 'Journey' | 'Environmental' | 'Worker Workload' | 'Simulation';
+  title: string;
+  statement: string;
+  physicalBasis: string;
+  boundaryConditions: string;
+  failureConsequence: string;
+}
+
+export interface ArchitectureNode {
+  id: string;
+  stepNumber: number;
+  layer: string;
+  name: string;
+  componentPath: string;
+  inputs: string[];
+  outputs: string[];
+  responsibilities: string[];
+  designPatterns: string[];
+}
+
+export interface DataSchemaField {
+  name: string;
+  type: string;
+  required: boolean;
+  description: string;
+}
+
+export interface DataSchemaDoc {
+  id: string;
+  name: string;
+  description: string;
+  typeScriptDefinition: string;
+  jsonExample: string;
+  fields: DataSchemaField[];
+}
+
+export interface UserGuideStep {
+  stepNumber: number;
+  title: string;
+  instruction: string;
+  tip?: string;
+  iconName?: string;
+}
+
+export interface UserGuideSection {
+  id: string;
+  title: string;
+  targetRole: 'QA Officer' | 'Logistics Operator' | 'Supervisor' | 'All';
+  description: string;
+  steps: UserGuideStep[];
+}
+
+export interface PhaseStatusItem {
+  phase: number;
+  name: string;
+  status: 'Complete' | 'In Progress' | 'Planned';
+  completionPercentage: number;
+  testCount: number;
+  deliverables: string[];
+}
+
+
+
+
+

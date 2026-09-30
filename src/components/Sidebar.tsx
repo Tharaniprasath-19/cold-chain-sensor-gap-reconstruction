@@ -14,7 +14,8 @@ import {
   Cpu, 
   BookOpen,
   ThermometerSnowflake,
-  Database
+  Database,
+  Award
 } from 'lucide-react';
 
 export type PageKey = 
@@ -26,13 +27,15 @@ export type PageKey =
   | 'data-preview'
   | 'reconstruction'
   | 'alerts'
+  | 'failure-lab'
   | 'before-after'
   | 'workload'
   | 'experiments'
   | 'risk-register'
   | 'assumptions'
   | 'architecture'
-  | 'user-guide';
+  | 'user-guide'
+  | 'project-status';
 
 interface SidebarProps {
   currentPage: PageKey;
@@ -62,8 +65,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
       items: [
         { key: 'data-preview', label: 'Data Preview & Simulator', icon: Database },
         { key: 'reconstruction', label: 'Reconstruction', icon: Sparkles },
+        { key: 'failure-lab', label: 'Failure Case Lab', icon: FlaskConical },
         { key: 'before-after', label: 'Before vs After', icon: SplitSquareVertical },
-        { key: 'experiments', label: 'Experiments', icon: FlaskConical },
       ],
     },
     {
@@ -75,11 +78,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
       ],
     },
     {
-      title: 'Documentation',
+      title: 'Governance & Documentation',
       items: [
         { key: 'assumptions', label: 'Assumptions', icon: FileText },
-        { key: 'architecture', label: 'Architecture', icon: Cpu },
+        { key: 'architecture', label: 'Architecture & Schemas', icon: Cpu },
         { key: 'user-guide', label: 'User Guide', icon: BookOpen },
+        { key: 'project-status', label: 'Project Status', icon: Award, badge: '100%', badgeColor: 'bg-emerald-950 text-emerald-300 border border-emerald-800' },
       ],
     },
   ];

@@ -8,6 +8,16 @@ import { SensorMonitoringPage } from './pages/SensorMonitoringPage';
 import { GapAnalysisPage } from './pages/GapAnalysisPage';
 import { DataPreviewPage } from './pages/DataPreviewPage';
 import { ReconstructionPage } from './pages/ReconstructionPage';
+import { AlertsPage } from './pages/AlertsPage';
+import { FailureCaseLabPage } from './pages/FailureCaseLabPage';
+import { WorkloadPage } from './pages/WorkloadPage';
+import { BeforeAfterPage } from './pages/BeforeAfterPage';
+import { RiskRegisterPage } from './pages/RiskRegisterPage';
+import { AssumptionsPage } from './pages/AssumptionsPage';
+import { ArchitecturePage } from './pages/ArchitecturePage';
+import { UserGuidePage } from './pages/UserGuidePage';
+import { ProjectStatusPage } from './pages/ProjectStatusPage';
+import { evaluateFleetAlerts, DEFAULT_ALERT_CONFIG } from './services/alerts/alertEngine';
 import { PlaceholderPage } from './pages/PlaceholderPage';
 import { 
   mockAlerts, 
@@ -30,6 +40,16 @@ export function App() {
     simulationResult.readings,
     simulationResult.config?.pingIntervalMinutes || 5
   );
+
+  // Compute live confidence-aware alerts for fleet overview
+  const liveAlerts = evaluateFleetAlerts(
+    simulationResult.readings,
+    detectedGaps,
+    simulationResult.shipments,
+    simulationResult.sensors,
+    DEFAULT_ALERT_CONFIG
+  );
+  const activeExposuresCount = liveAlerts.filter(a => a.status === 'CONFIRMED_EXPOSURE' || a.status === 'POSSIBLE_EXPOSURE').length;
 
   const handleNavigate = (page: PageKey) => {
     setCurrentPage(page);
@@ -67,7 +87,8 @@ export function App() {
             shipments={simulationResult.shipments}
             sensors={simulationResult.sensors}
             gaps={detectedGaps}
-            alerts={mockAlerts}
+            alerts={liveAlerts.length > 0 ? liveAlerts : mockAlerts}
+            readings={simulationResult.readings}
             onSelectShipment={setSelectedShipmentId}
             onNavigate={handleNavigate}
           />
@@ -134,13 +155,47 @@ export function App() {
           />
         );
       case 'alerts':
-      case 'before-after':
-      case 'workload':
+        return (
+          <AlertsPage
+            shipments={simulationResult.shipments}
+            sensors={simulationResult.sensors}
+            readings={simulationResult.readings}
+            gaps={detectedGaps}
+            onSelectShipment={(id) => {
+              setSelectedShipmentId(id);
+              handleNavigate('shipment-detail');
+            }}
+          />
+        );
+      case 'failure-lab':
       case 'experiments':
+        return <FailureCaseLabPage />;
+      case 'workload':
+        return (
+          <WorkloadPage
+            liveAlerts={liveAlerts}
+            shipments={simulationResult.shipments}
+          />
+        );
+      case 'before-after':
+        return (
+          <BeforeAfterPage
+            shipments={simulationResult.shipments}
+            sensors={simulationResult.sensors}
+            readings={simulationResult.readings}
+            gaps={detectedGaps}
+          />
+        );
       case 'risk-register':
+        return <RiskRegisterPage />;
       case 'assumptions':
+        return <AssumptionsPage />;
       case 'architecture':
+        return <ArchitecturePage />;
       case 'user-guide':
+        return <UserGuidePage onNavigate={handleNavigate} />;
+      case 'project-status':
+        return <ProjectStatusPage onNavigate={handleNavigate} />;
       default:
         return (
           <PlaceholderPage
@@ -157,7 +212,7 @@ export function App() {
       <Sidebar
         currentPage={currentPage}
         onNavigate={handleNavigate}
-        activeAlertsCount={mockAlerts.filter(a => a.status === 'Active').length}
+        activeAlertsCount={activeExposuresCount > 0 ? activeExposuresCount : mockAlerts.filter(a => a.status === 'Active').length}
         gapCount={detectedGaps.length}
       />
 

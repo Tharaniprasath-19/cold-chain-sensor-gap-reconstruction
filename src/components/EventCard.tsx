@@ -70,7 +70,7 @@ export const EventCard: React.FC<EventCardProps> = ({ alert, onSelectShipment })
 
         <div className="flex items-center gap-1 text-slate-400 font-mono">
           <Clock className="w-3 h-3" />
-          <span>{new Date(alert.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          <span>{new Date(alert.timestamp || alert.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
         </div>
       </div>
     </div>
