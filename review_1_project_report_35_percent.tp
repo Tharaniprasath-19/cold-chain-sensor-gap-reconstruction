@@ -8,7 +8,7 @@
 
 ## 📌 1. Milestone Overview & Summary (35% Completion)
 
-This **Review 1 Report** documents the completion of the **Foundation & Ingestion Phase (~35% Milestone)** for **ColdChain Insight**. 
+This **Review 1 Report** documents the completion of the **Foundation & Ingestion Stage (~35% Milestone)** for **ColdChain Insight**. 
 
 Cold-chain logistics for perishable seafood exports (such as sashimi-grade yellowfin tuna, Atlantic salmon, and live crustaceans) require continuous temperature maintenance within strict bounds (-2°C to +2°C for chilled; -20°C for deep-frozen). During multimodal transit handovers—such as tarmac transfers, customs bonded inspections, or metal-shielded container yards—wireless IoT sensors frequently suffer telemetry blackouts (gaps).
 
@@ -20,14 +20,14 @@ The primary objective of **Review 1** was to design and deploy the core applicat
 
 ## 🚀 2. What Has Been Completed So Far
 
-Under the Review 1 milestone scope, the following core foundational engineering phases have been completed:
+Under the Review 1 milestone scope, the following core foundational engineering modules have been completed:
 
-### 1. Enterprise Application Shell & UI Architecture (Phase 1)
+### 1. Enterprise Application Shell & UI Architecture (Milestone 1)
 - Built a desktop-first Single Page Application (SPA) using **React 18** and **TypeScript 5**.
 - Designed a dark logistics UI theme using **Tailwind CSS** with high visual hierarchy and responsive dashboard cards.
 - Integrated client-side page routing across key application views (`Executive Dashboard`, `Shipments Directory`, `Shipment Details`, `Sensor Monitoring`, `Gap Analysis`, `Reconstruction Engine`, `Data Simulator`).
 
-### 2. Cold-Chain Sensor Telemetry & Simulation Layer (Phase 2)
+### 2. Cold-Chain Sensor Telemetry & Simulation Layer (Milestone 2)
 - Implemented a seedable **Mulberry32 Pseudorandom Number Generator (`seed = 42`)** ensuring 100% reproducible simulated shipment data.
 - Modeled **5 realistic seafood export shipments** traveling through 6 physical multimodal transport legs:
   1. `Warehouse` (Initial cold storage)
@@ -108,17 +108,17 @@ Telemetry Simulator       Reconstruction Solver      QA Compliance Workflow & UI
 ```
 
 ### A. Review 2 Target (35% ──► 70% Milestone)
-1. **Automated 9-Pattern Sensor Gap Detection Engine (Phase 3)**:
+1. **Automated 9-Pattern Sensor Gap Detection Engine (Milestone 3)**:
    - Implement time-series detection logic for missing pings, short/long gaps, entire-leg dropouts, network outages, low RSSI, clock skew, noisy spikes, calibration drift, and conflicting sensors.
    - Construct formal `Gap` objects with last known temperature, preceding/following trends, and severity scores.
-2. **Layered 6-Level Reconstruction & Transparent Confidence Engine (Phase 4)**:
+2. **Layered 6-Level Reconstruction & Transparent Confidence Engine (Milestone 4)**:
    - Implement the hierarchical thermal solver (`INTERPOLATION`, `TREND_ESTIMATION`, `CORRELATED_SENSOR`, `JOURNEY_CONTEXT`, `CONFLICT_WIDENED`, `UNRECOVERABLE`).
    - Implement the transparent confidence score calculation formula and 95% uncertainty bounds (`lowerBound`, `upperBound`).
    - Establish strict handling for Level 6 unrecoverable gaps (`estimatedTemperature = null`).
    - Create automated 19-test unit test suite (`reconstructionEngine.test.ts`).
 
 ### B. Final / Review 3 Target (70% ──► 100% Milestone)
-1. **Polished Interactive Dual-Line Confidence Timeline (Phase 5)**:
+1. **Polished Interactive Dual-Line Confidence Timeline (Milestone 5)**:
    - Implement Recharts dual-line visualization (`#06b6d4` solid cyan observed vs `#c084fc` dashed purple reconstructed) with shaded 95% confidence bands and transport stage markers.
 2. **7 Summary Metric Cards & QA Compliance Table**:
    - Build metrics for Observed %, Reconstructed %, Unknown %, Peak Temp, Lowest Confidence %, Longest Gap, and Potential Exposure mins.
