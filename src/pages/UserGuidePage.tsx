@@ -7,7 +7,7 @@ import {
   ArrowRight, 
   Search
 } from 'lucide-react';
-import { USER_GUIDE_SECTIONS } from '../data/phase10Data';
+import { USER_GUIDE_SECTIONS } from '../data/governanceData';
 import { PageKey } from '../components/Sidebar';
 
 interface UserGuidePageProps {
@@ -35,7 +35,7 @@ export const UserGuidePage: React.FC<UserGuidePageProps> = ({ onNavigate }) => {
           <div className="flex items-center gap-2">
             <BookOpen className="w-5 h-5 text-blue-400" />
             <span className="text-xs font-mono uppercase tracking-wider text-blue-400 font-bold">
-              Phase 10 Operations Manual
+              Standard Operating Procedures Manual
             </span>
           </div>
           <h2 className="text-xl font-bold text-slate-100 mt-1">

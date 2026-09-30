@@ -11,7 +11,7 @@ import {
   GitBranch,
   Terminal
 } from 'lucide-react';
-import { ARCHITECTURE_NODES, DATA_SCHEMAS_DOCS } from '../data/phase10Data';
+import { ARCHITECTURE_NODES, DATA_SCHEMAS_DOCS } from '../data/governanceData';
 
 export const ArchitecturePage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'pipeline' | 'schemas'>('pipeline');
@@ -36,7 +36,7 @@ export const ArchitecturePage: React.FC = () => {
           <div className="flex items-center gap-2">
             <Cpu className="w-5 h-5 text-cyan-400" />
             <span className="text-xs font-mono uppercase tracking-wider text-cyan-400 font-bold">
-              Phase 10 Production Architecture & Schemas
+              Production Architecture & Schemas
             </span>
           </div>
           <h2 className="text-xl font-bold text-slate-100 mt-1">

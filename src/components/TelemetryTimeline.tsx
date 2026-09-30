@@ -70,7 +70,7 @@ export const TelemetryTimeline: React.FC<TelemetryTimelineProps> = ({
 
           <div className="flex items-center gap-1.5 font-medium text-purple-400">
             <span className="w-3 h-0.5 bg-purple-500 border-b border-purple-400"></span>
-            <span className="text-[11px] font-mono">(Phase 4 Reconstruction Reserved)</span>
+            <span className="text-[11px] font-mono">(Reconstruction Reserved)</span>
           </div>
         </div>
 

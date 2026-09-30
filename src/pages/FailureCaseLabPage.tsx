@@ -229,7 +229,7 @@ export const FailureCaseLabPage: React.FC = () => {
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-purple-950 text-purple-300 border border-purple-800">
-              PHASE 7
+              STORE & FORWARD LAB
             </span>
             <span className="text-xs font-mono text-cyan-400 font-semibold">
               Project Completion: 57%

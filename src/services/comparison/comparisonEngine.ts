@@ -1,5 +1,5 @@
 /**
- * ColdChain Insight - Phase 9: Before-vs-After Process Comparison & Experimental Validation Engine
+ * ColdChain Insight - Before-vs-After Process Comparison & Experimental Validation Engine
  * 
  * Compares:
  * - PART A (Baseline): Naive Last-Value Gap Fill (LOCF) without trend, neighbors, confidence, or journey context.
@@ -365,12 +365,12 @@ export function runBeforeAfterComparison(
   });
 
   // Alerts Comparison
-  // Proposed alerts via Phase 6 alert engine
+  // Proposed alerts via alert engine
   const liveAlerts = evaluateFleetAlerts(readings, gaps, shipments, sensors, DEFAULT_ALERT_CONFIG);
   const confirmedProposed = liveAlerts.filter(a => a.status === 'CONFIRMED_EXPOSURE').length;
   const possibleProposed = liveAlerts.filter(a => a.status === 'POSSIBLE_EXPOSURE').length;
   const lowConfidenceAnomalies = liveAlerts.filter(a => a.status === 'LOW_CONFIDENCE_ANOMALY').length;
-  const falseAlertsProposed = Math.max(0, lowConfidenceAnomalies - 1); // Phase 6 filters spurious alerts
+  const falseAlertsProposed = Math.max(0, lowConfidenceAnomalies - 1); // Alert engine filters spurious alerts
 
   // Baseline naive alerts:
   // Flags alert on ANY gap exceeding threshold or holding naive last-value
@@ -585,7 +585,7 @@ export function runBeforeAfterComparison(
       description: 'Because no direct telemetry pings arrive during the event, interpolation and trend models assume smooth decay towards compartment setpoint, underestimating transient spike sharpness until connection restores.',
       baselineMae: rapidThermalGroup ? rapidThermalGroup.baselineMae : 1.82,
       proposedMae: rapidThermalGroup ? rapidThermalGroup.proposedMae : 1.15,
-      mitigationRecommendation: 'Store-and-Forward edge buffers (Phase 7) preserve non-volatile on-device flash logs so peak excursions are faithfully ingested with zero smoothing once re-connected.'
+      mitigationRecommendation: 'Store-and-Forward edge buffers preserve non-volatile on-device flash logs so peak excursions are faithfully ingested with zero smoothing once re-connected.'
     },
     {
       weakness: 'Dual Drifted Sensors (Correlated Calibration Bias)',

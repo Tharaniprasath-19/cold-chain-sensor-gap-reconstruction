@@ -9,7 +9,7 @@ import { demoSimulationResult } from '../../../data/simulated/demoDataset';
 import { detectGaps } from '../../detection/gapDetector';
 
 function runAlertTests() {
-  console.log('🧪 Running Phase 6 Confidence-Aware Alert Engine Unit Tests...\n');
+  console.log('🧪 Running Confidence-Aware Alert Engine Unit Tests...\n');
   let passed = 0;
   let total = 0;
 
@@ -247,7 +247,7 @@ function runAlertTests() {
     assert(tradeoffs.every(p => p.threshold !== undefined && p.totalAlerts !== undefined), 'Test 8: Tradeoff points have threshold and totalAlerts properties');
   }
 
-  console.log(`\n🎉 Results: ${passed}/${total} Phase 6 alert engine unit tests passed cleanly.\n`);
+  console.log(`\n🎉 Results: ${passed}/${total} alert engine unit tests passed cleanly.\n`);
 
   if (passed !== total) {
     process.exit(1);

@@ -479,7 +479,7 @@ export interface WorkloadSummaryMetrics {
 }
 
 // ==========================================
-// PHASE 9: Before-vs-After Comparison Types
+// Before-vs-After Comparison Types
 // ==========================================
 
 export interface ProcessMetrics {
@@ -565,7 +565,7 @@ export interface BeforeAfterExperimentReport {
 }
 
 // ==========================================
-// PHASE 10: RISK, ASSUMPTIONS, ARCHITECTURE & SCHEMAS
+// GOVERNANCE: RISK, ASSUMPTIONS, ARCHITECTURE & SCHEMAS
 // ==========================================
 
 export type RiskLikelihood = 'Low' | 'Medium' | 'High';
@@ -639,8 +639,8 @@ export interface UserGuideSection {
   steps: UserGuideStep[];
 }
 
-export interface PhaseStatusItem {
-  phase: number;
+export interface MilestoneStatusItem {
+  milestone: number;
   name: string;
   status: 'Complete' | 'In Progress' | 'Planned';
   completionPercentage: number;

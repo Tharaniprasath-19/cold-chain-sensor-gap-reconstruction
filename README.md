@@ -11,7 +11,7 @@
 3. [Key Platform Features](#-key-platform-features)
 4. [Complete System Architecture](#-complete-system-architecture)
 5. [Technology Stack](#-technology-stack)
-6. [Project Phases (1–10 Roadmap)](#-project-phases-110-roadmap)
+6. [Project Milestones (1–10 Roadmap)](#-project-milestones-110-roadmap)
 7. [Telemetry Data Simulation & Ground Truth](#-telemetry-data-simulation--ground-truth)
 8. [Automated Gap Detection Engine](#-automated-gap-detection-engine)
 9. [Layered Reconstruction Engine](#-layered-reconstruction-engine)
@@ -157,20 +157,20 @@ High-value seafood exports (such as sashimi-grade Yellowfin Tuna, Atlantic Salmo
 
 ---
 
-## 📅 Project Phases (1–10 Roadmap)
+## 📅 Project Milestones (1–10 Roadmap)
 
-| Phase | Milestone Name | Status | Unit Tests | Key Deliverables |
+| Milestone | Module Name | Status | Unit Tests | Key Deliverables |
 | :---: | :--- | :---: | :---: | :--- |
-| **Phase 1** | Application Shell & Foundation | ✅ Complete | Verified | Tailwind dark logistics design system, multi-page sidebar navigation |
-| **Phase 2** | Telemetry Simulation & Ground Truth | ✅ Complete | Verified | Deterministic PRNG (`seed = 42`), physical cooling kinetics, hidden ground truth |
-| **Phase 3** | Automated Gap Detection Engine | ✅ Complete | Verified | 9 disruption patterns, interval scanning (>1.5x ping), preliminary risk tags |
-| **Phase 4** | Layered 6-Level Reconstruction Engine | ✅ Complete | **19/19** | 6-level solver, dynamic 95% confidence bands, explicit UNKNOWN periods |
-| **Phase 5** | Shipment Confidence Timeline & QA Dashboards | ✅ Complete | Verified | Dual-line timeline (observed vs reconstructed), "Why reconstructed?" modal |
-| **Phase 6** | Confidence-Aware Alert Engine | ✅ Complete | **29/29** | Multi-factor alert evaluation, dynamic ROC curves (FPR vs FNR), triage table |
-| **Phase 7** | Store-and-Forward Edge Buffering Lab | ✅ Complete | **36/36** | Industrial SPI flash buffering, 6.2°C excursion preservation, 4 failure scenarios |
-| **Phase 8** | Worker Workload Safeguards | ✅ Complete | **54/54** | Hard capacity caps (8/8 max), anti-spam driver rules, supervisor escalation |
-| **Phase 9** | Before-vs-After Comparison & Validation | ✅ Complete | **42/42** | LOCF baseline vs proposed benchmark, risk-weighted exposure, 90% band coverage |
-| **Phase 10** | Final Integration, Risk, Docs & Build | ✅ Complete | **180/180** | Risk Register, Assumptions, Architecture, Schemas, User Guide, 10-KPI Dashboard |
+| **Milestone 1** | Application Shell & Foundation | ✅ Complete | Verified | Tailwind dark logistics design system, multi-page sidebar navigation |
+| **Milestone 2** | Telemetry Simulation & Ground Truth | ✅ Complete | Verified | Deterministic PRNG (`seed = 42`), physical cooling kinetics, hidden ground truth |
+| **Milestone 3** | Automated Gap Detection Engine | ✅ Complete | Verified | 9 disruption patterns, interval scanning (>1.5x ping), preliminary risk tags |
+| **Milestone 4** | Layered 6-Level Reconstruction Engine | ✅ Complete | **19/19** | 6-level solver, dynamic 95% confidence bands, explicit UNKNOWN periods |
+| **Milestone 5** | Shipment Confidence Timeline & QA Dashboards | ✅ Complete | Verified | Dual-line timeline (observed vs reconstructed), "Why reconstructed?" modal |
+| **Milestone 6** | Confidence-Aware Alert Engine | ✅ Complete | **29/29** | Multi-factor alert evaluation, dynamic ROC curves (FPR vs FNR), triage table |
+| **Milestone 7** | Store-and-Forward Edge Buffering Lab | ✅ Complete | **36/36** | Industrial SPI flash buffering, 6.2°C excursion preservation, 4 failure scenarios |
+| **Milestone 8** | Worker Workload Safeguards | ✅ Complete | **54/54** | Hard capacity caps (8/8 max), anti-spam driver rules, supervisor escalation |
+| **Milestone 9** | Before-vs-After Comparison & Validation | ✅ Complete | **42/42** | LOCF baseline vs proposed benchmark, risk-weighted exposure, 90% band coverage |
+| **Milestone 10** | Final Integration, Risk, Docs & Build | ✅ Complete | **180/180** | Risk Register, Assumptions, Architecture, Schemas, User Guide, 10-KPI Dashboard |
 
 **Overall Project Completion: 100%**
 
@@ -384,7 +384,7 @@ Open your browser at `http://localhost:3000` to access ColdChain Insight.
 
 ## 🧪 Testing Suite (180/180 Passing)
 
-Run individual phase test suites or the entire automated suite:
+Run individual milestone test suites or the entire automated suite:
 
 ```bash
 # 1. Run Layered Reconstruction Engine Tests (19 tests)
@@ -411,17 +411,17 @@ npm test
 🧪 Running Reconstruction Engine Unit Tests...
   ✅ PASS: 19/19 unit tests passed cleanly.
 
-🧪 Running Phase 6 Confidence-Aware Alert Engine Unit Tests...
-  ✅ PASS: 29/29 Phase 6 alert engine unit tests passed cleanly.
+🧪 Running Confidence-Aware Alert Engine Unit Tests...
+  ✅ PASS: 29/29 alert engine unit tests passed cleanly.
 
-🧪 Running Phase 7 Store-and-Forward & Failure Handling Unit Tests...
-  ✅ PASS: 36/36 Phase 7 store-and-forward & failure handling tests passed cleanly.
+🧪 Running Store-and-Forward & Failure Handling Unit Tests...
+  ✅ PASS: 36/36 store-and-forward & failure handling tests passed cleanly.
 
-🧪 Running Phase 8 Worker Workload Safeguards Unit Tests...
-  ✅ PASS: 54/54 Phase 8 workload safeguard tests passed cleanly.
+🧪 Running Worker Workload Safeguards Unit Tests...
+  ✅ PASS: 54/54 workload safeguard tests passed cleanly.
 
-🧪 Running Phase 9 Before-vs-After Process Comparison Unit Tests...
-  ✅ PASS: 42/42 Phase 9 comparison engine tests passed cleanly.
+🧪 Running Before-vs-After Process Comparison Unit Tests...
+  ✅ PASS: 42/42 comparison engine tests passed cleanly.
 
 🎉 Results: 180/180 unit tests passed cleanly across all test suites.
 ```
@@ -462,7 +462,7 @@ In accordance with rigorous engineering ethics, ColdChain Insight transparently 
 ## 🔮 Future Improvements
 
 1. **Cellular Signal Tower Triangulation**: Integrate GSM cell-ID tracking to supplement GPS during indoor container depot staging.
-2. **Carton Slurry Thermodynamics**: Implement finite-element computational fluid dynamics (CFD) modeling phase-change ice slurry melt rates within specific carton positions.
+2. **Carton Slurry Thermodynamics**: Implement finite-element computational fluid dynamics (CFD) modeling latent heat ice slurry melt rates within specific carton positions.
 3. **Automated Customs Blockchain Attestation**: Generate signed W3C Verifiable Credentials for cold-chain audit trails submitted to EU TRACES and US FDA ITACS portals.
 
 ---

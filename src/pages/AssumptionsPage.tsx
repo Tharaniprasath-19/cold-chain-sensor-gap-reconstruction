@@ -11,7 +11,7 @@ import {
   Cpu,
   Info
 } from 'lucide-react';
-import { ASSUMPTIONS_ITEMS, MANDATORY_ESTIMATE_DISCLAIMER } from '../data/phase10Data';
+import { ASSUMPTIONS_ITEMS, MANDATORY_ESTIMATE_DISCLAIMER } from '../data/governanceData';
 
 export const AssumptionsPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -39,7 +39,7 @@ export const AssumptionsPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <FileText className="w-5 h-5 text-amber-400" />
             <span className="text-xs font-mono uppercase tracking-wider text-amber-400 font-bold">
-              Phase 10 Scientific Specification
+              Thermodynamic & System Specification
             </span>
           </div>
           <h2 className="text-xl font-bold text-slate-100 mt-1">

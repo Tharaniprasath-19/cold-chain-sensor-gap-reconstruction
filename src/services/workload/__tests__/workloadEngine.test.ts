@@ -1,5 +1,5 @@
 /**
- * Unit Tests for Phase 8: Worker Workload Safeguards Engine
+ * Unit Tests for Worker Workload Safeguards Engine
  * 
  * Verifies:
  * 1. Available worker assignment & workload percentage calculation
@@ -28,7 +28,7 @@ import {
 import type { Worker, WorkloadTask, Alert } from '../../../types';
 
 function runTests() {
-  console.log('🧪 Running Phase 8 Worker Workload Safeguards Unit Tests...\n');
+  console.log('🧪 Running Worker Workload Safeguards Unit Tests...\n');
 
   let passedTests = 0;
   let totalTests = 0;
@@ -298,7 +298,7 @@ function runTests() {
   // 12. Standard Task Type Estimations
   assert(TASK_ESTIMATED_MINUTES['Temperature verification'] === 20, 'Test 12: Standard task estimated minutes tracked');
 
-  console.log(`\n🎉 Results: ${passedTests}/${totalTests} Phase 8 workload safeguard tests passed cleanly.\n`);
+  console.log(`\n🎉 Results: ${passedTests}/${totalTests} workload safeguard tests passed cleanly.\n`);
 }
 
 runTests();

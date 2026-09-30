@@ -125,7 +125,7 @@ export const AlertsPage: React.FC<AlertsPageProps> = ({
         <div>
           <div className="flex items-center gap-2">
             <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-rose-950 text-rose-300 border border-rose-800">
-              PHASE 6
+              ALERT ENGINE
             </span>
             <span className="text-xs font-mono text-cyan-400 font-semibold">
               Project Completion: 47%
@@ -509,7 +509,7 @@ export const AlertsPage: React.FC<AlertsPageProps> = ({
               ColdChain Insight: Multi-Factor Confidence-Aware Engine
             </span>
             <p className="text-slate-400 leading-relaxed">
-              Our Phase 6 engine factors in <strong>sustained exposure duration</strong>, differentiates <strong>direct sensor observations</strong> from 
+              Our confidence-aware alert engine factors in <strong>sustained exposure duration</strong>, differentiates <strong>direct sensor observations</strong> from 
               <strong>reconstructed estimates</strong>, verifies <strong>NIST calibration & battery health</strong>, and requires high confidence before 
               escalation. Unverifiable blackouts are categorized as <span className="font-mono text-amber-300">LOW_CONFIDENCE_ANOMALY</span> for arrival dock audits, 
               protecting cargo integrity without false alarms.

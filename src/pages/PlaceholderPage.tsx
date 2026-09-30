@@ -24,7 +24,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'reconstruction':
         return {
           title: 'Sensor-Gap Reconstruction Engine',
-          phase: 'Phase 2: Physics-Informed ML Engine',
+          module: 'Milestone 2: Physics-Informed ML Engine',
           icon: Sparkles,
           description: 'Thermal inertia kinematics, Kalman-LSTM sensor fusion, and spatial neighbor interpolation algorithms to mathematically reconstruct missing temperature profiles across carrier dropouts.',
           plannedFeatures: [
@@ -37,7 +37,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'alerts':
         return {
           title: 'Alert & Excursion Dispatch Center',
-          phase: 'Phase 2: Real-Time Escalation',
+          module: 'Milestone 2: Real-Time Escalation',
           icon: Bell,
           description: 'Automated alert trigger matrix, SMS/Email dispatching to cold-chain logistics officers, and SLA compliance escalation for temperature excursions.',
           plannedFeatures: [
@@ -50,7 +50,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'before-after':
         return {
           title: 'Before vs After Thermal Profile Compare',
-          phase: 'Phase 2: Impact Analysis',
+          module: 'Milestone 2: Impact Analysis',
           icon: SplitSquareVertical,
           description: 'Side-by-side comparison of raw incomplete telemetry traces against reconstructed continuous thermal profiles for regulatory auditors and insurance claims.',
           plannedFeatures: [
@@ -63,7 +63,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'workload':
         return {
           title: 'Logistics Officer & QA Workload Management',
-          phase: 'Phase 3: Operations & Dispatch',
+          module: 'Milestone 3: Operations & Dispatch',
           icon: Users,
           description: 'Task assignment and workload distribution for port inspectors, cold-store technicians, and quality control personnel across export hubs.',
           plannedFeatures: [
@@ -76,7 +76,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'experiments':
         return {
           title: 'Reconstruction Algorithm Sandbox & Experiments',
-          phase: 'Phase 3: Data Science Benchmarking',
+          module: 'Milestone 3: Data Science Benchmarking',
           icon: FlaskConical,
           description: 'Benchmarking environment to compare different ML reconstruction algorithms (Random Forest, LSTM, Spline Interpolation, Thermal Inertia) on historical synthetic sensor dropouts.',
           plannedFeatures: [
@@ -89,7 +89,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'risk-register':
         return {
           title: 'Enterprise Cold-Chain Risk Register',
-          phase: 'Phase 3: Compliance & Risk',
+          module: 'Milestone 3: Compliance & Risk',
           icon: ShieldAlert,
           description: 'Systemic risk scoring for export routes, carrier reliability ratings, seasonal ambient temperature risks, and packaging thermal degradation ratings.',
           plannedFeatures: [
@@ -102,7 +102,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'assumptions':
         return {
           title: 'Thermal & Physics Model Assumptions',
-          phase: 'Documentation Module',
+          module: 'Documentation Module',
           icon: FileText,
           description: 'Formal documentation of thermal physics assumptions (Newtonian cooling rates, latent heat of fusion during fish freezing, packaging boundary conditions).',
           plannedFeatures: [
@@ -115,7 +115,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       case 'architecture':
         return {
           title: 'System Architecture & Data Pipelines',
-          phase: 'Documentation Module',
+          module: 'Documentation Module',
           icon: Cpu,
           description: 'Technical design specification showing IoT gateway MQTT ingest, event bus streaming, reconstruction microservices, and database schema.',
           plannedFeatures: [
@@ -129,7 +129,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
       default:
         return {
           title: 'User Guide & Operating Manual',
-          phase: 'Documentation Module',
+          module: 'Documentation Module',
           icon: BookOpen,
           description: 'Step-by-step operating guide for logistics managers, export QA officers, and customs compliance auditors.',
           plannedFeatures: [
@@ -155,7 +155,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
 
         <div className="space-y-2">
           <span className="inline-block px-3 py-1 rounded-full text-xs font-mono font-semibold bg-purple-950 text-purple-300 border border-purple-800">
-            {meta.phase}
+            {meta.module}
           </span>
           <h2 className="text-2xl font-bold text-slate-100">{meta.title}</h2>
           <p className="text-xs text-slate-300 max-w-xl mx-auto leading-relaxed">
@@ -165,7 +165,7 @@ export const PlaceholderPage: React.FC<PlaceholderPageProps> = ({ pageKey, onNav
 
         <div className="p-4 bg-slate-950/90 rounded-xl border border-slate-800 text-left space-y-2 mt-6">
           <h4 className="text-xs font-bold text-cyan-400 uppercase tracking-wider">
-            Planned Features Coming in Next Phase:
+            Planned Features Coming in Next Milestone:
           </h4>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs text-slate-300">
             {meta.plannedFeatures.map((feat, idx) => (

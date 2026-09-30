@@ -9,7 +9,7 @@ import {
 } from '../storeAndForwardEngine';
 
 function runStoreAndForwardTests() {
-  console.log('🧪 Running Phase 7 Store-and-Forward & Failure Handling Unit Tests...\n');
+  console.log('🧪 Running Store-and-Forward & Failure Handling Unit Tests...\n');
   let passed = 0;
   let total = 0;
 
@@ -161,7 +161,7 @@ function runStoreAndForwardTests() {
     assert(reports.SCENARIO_3_CONFLICTING_SENSORS.expectedBehavior.includes('NOT blindly average'), 'Test 9: Scenario 3 explicitly enforces no blind averaging');
   }
 
-  console.log(`\n🎉 Results: ${passed}/${total} Phase 7 store-and-forward & failure handling tests passed cleanly.\n`);
+  console.log(`\n🎉 Results: ${passed}/${total} store-and-forward & failure handling tests passed cleanly.\n`);
 
   if (passed !== total) {
     process.exit(1);

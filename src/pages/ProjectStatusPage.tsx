@@ -10,7 +10,7 @@ import {
   Check,
   ArrowRight
 } from 'lucide-react';
-import { PROJECT_PHASES_STATUS } from '../data/phase10Data';
+import { PROJECT_MILESTONES_STATUS } from '../data/governanceData';
 import { PageKey } from '../components/Sidebar';
 
 interface ProjectStatusPageProps {
@@ -18,9 +18,9 @@ interface ProjectStatusPageProps {
 }
 
 export const ProjectStatusPage: React.FC<ProjectStatusPageProps> = ({ onNavigate }) => {
-  const totalPhases = PROJECT_PHASES_STATUS.length;
-  const completedPhases = PROJECT_PHASES_STATUS.filter(p => p.status === 'Complete').length;
-  const overallPercentage = ((completedPhases / totalPhases) * 100).toFixed(0);
+  const totalMilestones = PROJECT_MILESTONES_STATUS.length;
+  const completedMilestones = PROJECT_MILESTONES_STATUS.filter(p => p.status === 'Complete').length;
+  const overallPercentage = ((completedMilestones / totalMilestones) * 100).toFixed(0);
 
   return (
     <div className="space-y-6 pb-12">
@@ -37,7 +37,7 @@ export const ProjectStatusPage: React.FC<ProjectStatusPageProps> = ({ onNavigate
             Global Project Status: <span className="text-emerald-400 font-extrabold">{overallPercentage}% COMPLETE</span>
           </h2>
           <p className="text-xs text-slate-300 mt-1 max-w-3xl">
-            All 10 project phases have been successfully developed, integrated, programmatically verified, documented, and tested for production readiness.
+            All 10 project milestones have been successfully developed, integrated, programmatically verified, documented, and tested for production readiness.
           </p>
         </div>
 
@@ -106,22 +106,22 @@ export const ProjectStatusPage: React.FC<ProjectStatusPageProps> = ({ onNavigate
         </div>
       </div>
 
-      {/* Complete Phases List (Phase 1 through Phase 10) */}
+      {/* Complete Milestones List (Milestone 1 through Milestone 10) */}
       <div className="glass-panel p-6 space-y-4">
         <h3 className="font-bold text-base text-slate-100 flex items-center justify-between border-b border-slate-800 pb-3">
           <span className="flex items-center gap-2">
             <Layers className="w-5 h-5 text-cyan-400" />
-            Phase 1 through Phase 10 Roadmap Delivery
+            Milestone 1 through Milestone 10 Roadmap Delivery
           </span>
           <span className="text-xs font-mono text-emerald-400 font-bold bg-emerald-950/60 border border-emerald-800 px-2.5 py-0.5 rounded">
-            All 10 Phases Verified
+            All 10 Milestones Verified
           </span>
         </h3>
 
         <div className="space-y-3 pt-2">
-          {PROJECT_PHASES_STATUS.map((phase) => (
+          {PROJECT_MILESTONES_STATUS.map((item) => (
             <div 
-              key={phase.phase}
+              key={item.milestone}
               className="p-4 rounded-xl bg-slate-900/60 border border-slate-800 hover:border-slate-700 transition-all space-y-3"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
@@ -131,15 +131,15 @@ export const ProjectStatusPage: React.FC<ProjectStatusPageProps> = ({ onNavigate
                   </div>
                   <div>
                     <h4 className="font-bold text-sm text-slate-100">
-                      Phase {phase.phase} — {phase.name}
+                      Milestone {item.milestone} — {item.name}
                     </h4>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-2.5 self-end sm:self-center">
-                  {phase.testCount > 0 && (
+                  {item.testCount > 0 && (
                     <span className="font-mono text-[11px] text-cyan-400 bg-cyan-950/80 border border-cyan-800 px-2 py-0.5 rounded">
-                      {phase.testCount} Tests Passing
+                      {item.testCount} Tests Passing
                     </span>
                   )}
                   <span className="font-mono text-[11px] text-emerald-400 bg-emerald-950/80 border border-emerald-800 px-2.5 py-0.5 rounded font-bold">
@@ -150,10 +150,10 @@ export const ProjectStatusPage: React.FC<ProjectStatusPageProps> = ({ onNavigate
 
               <div className="pl-10 text-xs">
                 <ul className="grid grid-cols-1 md:grid-cols-3 gap-2 text-slate-300">
-                  {phase.deliverables.map((item, idx) => (
+                  {item.deliverables.map((deliv, idx) => (
                     <li key={idx} className="flex items-start gap-1.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shrink-0 mt-1.5"></span>
-                      <span className="leading-snug text-slate-400">{item}</span>
+                      <span className="leading-snug text-slate-400">{deliv}</span>
                     </li>
                   ))}
                 </ul>

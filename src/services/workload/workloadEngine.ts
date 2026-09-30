@@ -1,5 +1,5 @@
 /**
- * ColdChain Insight - Phase 8: Worker Workload Safeguards Engine
+ * ColdChain Insight - Worker Workload Safeguards Engine
  * 
  * CORE PRINCIPLE:
  * "Uncertainty must not be resolved by exceeding frontline worker workload capacity."
@@ -353,7 +353,7 @@ export function assignTask(
 
 /**
  * Alert to Workload Pipeline Connector
- * Connects Phase 6 alert intelligence to Phase 8 workload dispatch.
+ * Connects alert intelligence to workload dispatch.
  * 
  * DESIGN RULE ENFORCEMENT:
  * "The system must NOT resolve uncertainty by defaulting to: 'Ask driver to manually check temperature more frequently.'"

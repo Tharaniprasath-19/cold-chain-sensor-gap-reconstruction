@@ -110,7 +110,7 @@ export const BeforeAfterPage: React.FC<BeforeAfterPageProps> = ({
             <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
               Before-vs-After Process Comparison
               <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-900/60 text-cyan-300 border border-cyan-700 font-mono">
-                Phase 9 (85%)
+                Benchmark Validation
               </span>
             </h1>
             <p className="text-sm text-slate-400 mt-0.5">
@@ -289,7 +289,7 @@ export const BeforeAfterPage: React.FC<BeforeAfterPageProps> = ({
           <div className="p-5 space-y-4 text-xs">
             <p className="text-slate-300 leading-relaxed">
               Integrates <strong>physics-based thermal inertia, cross-correlated redundant sensors, NIST calibration drift correction, 
-              and explicit UNKNOWN markers</strong>. Connects to confidence-aware alerts (Phase 6) and workload safeguards (Phase 8).
+              and explicit UNKNOWN markers</strong>. Connects to confidence-aware alerts (Alert Engine) and workload safeguards (Workload Safeguards).
             </p>
 
             <div className="grid grid-cols-2 gap-3 pt-1">

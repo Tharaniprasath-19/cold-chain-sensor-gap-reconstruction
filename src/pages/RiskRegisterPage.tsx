@@ -12,7 +12,7 @@ import {
   ChevronUp,
   Download
 } from 'lucide-react';
-import { RISK_REGISTER_ITEMS } from '../data/phase10Data';
+import { RISK_REGISTER_ITEMS } from '../data/governanceData';
 import { RiskImpact, RiskLikelihood, ResidualRisk } from '../types';
 
 export const RiskRegisterPage: React.FC = () => {
@@ -97,7 +97,7 @@ export const RiskRegisterPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <ShieldAlert className="w-5 h-5 text-rose-400" />
             <span className="text-xs font-mono uppercase tracking-wider text-rose-400 font-bold">
-              Phase 10 Enterprise Governance
+              Enterprise Risk Governance
             </span>
           </div>
           <h2 className="text-xl font-bold text-slate-100 mt-1">

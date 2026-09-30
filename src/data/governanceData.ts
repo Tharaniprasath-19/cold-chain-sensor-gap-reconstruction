@@ -4,7 +4,7 @@ import type {
   ArchitectureNode, 
   DataSchemaDoc, 
   UserGuideSection,
-  PhaseStatusItem 
+  MilestoneStatusItem 
 } from '../types';
 
 /**
@@ -83,7 +83,7 @@ export const RISK_REGISTER_ITEMS: RiskItem[] = [
     category: 'Operational',
     likelihood: 'High',
     impact: 'High',
-    mitigation: 'Phase 6 confidence-aware alert engine; alerts stratified into CONFIRMED_EXPOSURE vs POSSIBLE_EXPOSURE vs LOW_CONFIDENCE_ANOMALY; duration thresholds required (e.g. 20m continuous excursion); cargo never rejected on algorithmic estimates alone.',
+    mitigation: 'Alert Engine confidence-aware alert engine; alerts stratified into CONFIRMED_EXPOSURE vs POSSIBLE_EXPOSURE vs LOW_CONFIDENCE_ANOMALY; duration thresholds required (e.g. 20m continuous excursion); cargo never rejected on algorithmic estimates alone.',
     detectionMethod: 'Receiver Operating Characteristic (ROC) curve tuning on ground truth benchmarks; false positive rate (FPR) continuously monitored.',
     residualRisk: 'Low',
     owner: 'Commercial Seafood Export Director',
@@ -107,7 +107,7 @@ export const RISK_REGISTER_ITEMS: RiskItem[] = [
     category: 'Operational',
     likelihood: 'High',
     impact: 'High',
-    mitigation: 'Phase 8 hard-capacity limits (e.g., maximum 8 tasks per driver/dock worker); strict blocking when capacity is reached; automatic fallback to peer worker, supervisor escalation, or deferred arrival inspection.',
+    mitigation: 'Workload Safeguards hard-capacity limits (e.g., maximum 8 tasks per driver/dock worker); strict blocking when capacity is reached; automatic fallback to peer worker, supervisor escalation, or deferred arrival inspection.',
     detectionMethod: 'Real-time worker workload status monitoring (AVAILABLE / NEAR_CAPACITY / AT_CAPACITY / OFF_SHIFT) with immutable assignment audit trail.',
     residualRisk: 'Low',
     owner: 'Fleet Dispatch & Safety Superintendent',
@@ -731,7 +731,7 @@ export const DATA_SCHEMAS_DOCS: DataSchemaDoc[] = [
   {
     id: 'SCHEMA-09',
     name: 'Alert',
-    description: 'Actionable compliance notification evaluated by the Phase 6 confidence-aware alert engine, balancing thermal thresholds, duration, directness, and sensor reliability.',
+    description: 'Actionable compliance notification evaluated by the Alert Engine confidence-aware alert engine, balancing thermal thresholds, duration, directness, and sensor reliability.',
     typeScriptDefinition: `export interface Alert {
   id: string;
   shipmentId: string;
@@ -809,7 +809,7 @@ export const DATA_SCHEMAS_DOCS: DataSchemaDoc[] = [
   {
     id: 'SCHEMA-11',
     name: 'WorkloadTask',
-    description: 'Physical or administrative verification task generated in response to an alert or handover, constrained by Phase 8 workload safeguards.',
+    description: 'Physical or administrative verification task generated in response to an alert or handover, constrained by Workload Safeguards workload safeguards.',
     typeScriptDefinition: `export interface WorkloadTask {
   id: string;
   type: TaskType;
@@ -1019,11 +1019,11 @@ export const USER_GUIDE_SECTIONS: UserGuideSection[] = [
 ];
 
 /**
- * 6. GLOBAL PROJECT STATUS (Phases 1 through 10)
+ * 6. GLOBAL PROJECT STATUS (Milestones 1 through 10)
  */
-export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
+export const PROJECT_MILESTONES_STATUS: MilestoneStatusItem[] = [
   {
-    phase: 1,
+    milestone: 1,
     name: 'Application Shell & Logistics System Foundation',
     status: 'Complete',
     completionPercentage: 100,
@@ -1035,7 +1035,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 2,
+    milestone: 2,
     name: 'Deterministic Telemetry Simulation & Ground Truth',
     status: 'Complete',
     completionPercentage: 100,
@@ -1047,7 +1047,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 3,
+    milestone: 3,
     name: 'Automated Gap Detection Engine',
     status: 'Complete',
     completionPercentage: 100,
@@ -1059,7 +1059,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 4,
+    milestone: 4,
     name: 'Layered 6-Level Reconstruction & Confidence Engine',
     status: 'Complete',
     completionPercentage: 100,
@@ -1071,7 +1071,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 5,
+    milestone: 5,
     name: 'Shipment Confidence Timeline & QA Dashboards',
     status: 'Complete',
     completionPercentage: 100,
@@ -1083,7 +1083,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 6,
+    milestone: 6,
     name: 'Confidence-Aware Alert Engine & Threshold Tuning',
     status: 'Complete',
     completionPercentage: 100,
@@ -1095,7 +1095,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 7,
+    milestone: 7,
     name: 'Store-and-Forward Edge Buffering & Failure Case Lab',
     status: 'Complete',
     completionPercentage: 100,
@@ -1107,7 +1107,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 8,
+    milestone: 8,
     name: 'Frontline Worker Workload Safeguards',
     status: 'Complete',
     completionPercentage: 100,
@@ -1119,7 +1119,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 9,
+    milestone: 9,
     name: 'Before-vs-After Process Comparison & Experimental Validation',
     status: 'Complete',
     completionPercentage: 100,
@@ -1131,7 +1131,7 @@ export const PROJECT_PHASES_STATUS: PhaseStatusItem[] = [
     ]
   },
   {
-    phase: 10,
+    milestone: 10,
     name: 'Final Integration, Risk Management, Documentation & Production Readiness',
     status: 'Complete',
     completionPercentage: 100,

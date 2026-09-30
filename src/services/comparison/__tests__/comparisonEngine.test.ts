@@ -1,5 +1,5 @@
 /**
- * Unit Tests for Phase 9: Before-vs-After Process Comparison & Experimental Validation
+ * Unit Tests for Before-vs-After Process Comparison & Experimental Validation
  * 
  * Verifies:
  * 1. Baseline calculation: Naive Last-Value Gap Fill (LOCF)
@@ -23,7 +23,7 @@ import { demoSimulationResult } from '../../../data/simulated/demoDataset';
 import { SensorReading, Gap, Shipment, Sensor } from '../../../types';
 
 function runTests() {
-  console.log('🧪 Running Phase 9 Before-vs-After Process Comparison Unit Tests...\n');
+  console.log('🧪 Running Before-vs-After Process Comparison Unit Tests...\n');
 
   let passedTests = 0;
   let totalTests = 0;
@@ -288,7 +288,7 @@ function runTests() {
   assert(fullReport.weaknessesAndLimitations.some(w => w.weakness.includes('Transients')), 'Test 12: Documents rapid thermal transient weakness');
   assert(fullReport.weaknessesAndLimitations.some(w => w.weakness.includes('Drifted')), 'Test 12: Documents dual drifted sensor weakness');
 
-  console.log(`\n🎉 Results: ${passedTests}/${totalTests} Phase 9 Before-vs-After Comparison tests passed cleanly.\n`);
+  console.log(`\n🎉 Results: ${passedTests}/${totalTests} Before-vs-After Comparison tests passed cleanly.\n`);
 }
 
 runTests();

@@ -376,7 +376,7 @@ export const WorkloadPage: React.FC<WorkloadPageProps> = ({
                 <h1 className="text-2xl font-bold text-slate-100 tracking-tight flex items-center gap-2">
                   Worker Workload Safeguards
                   <span className="text-xs px-2.5 py-0.5 rounded-full bg-cyan-900/60 text-cyan-300 border border-cyan-700 font-mono">
-                    Phase 8 (67%)
+                    Workload Safeguards
                   </span>
                 </h1>
                 <p className="text-sm text-slate-400 mt-0.5">
@@ -609,13 +609,13 @@ export const WorkloadPage: React.FC<WorkloadPageProps> = ({
         )}
       </div>
 
-      {/* Alert to Workload Pipeline Bridge (Phase 6 -> Phase 8) */}
+      {/* Alert to Workload Pipeline Bridge (Alert -> Workload Safeguard) */}
       <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-2.5">
           <div className="flex items-center gap-2">
             <Layers className="w-4 h-4 text-cyan-400" />
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-              Phase 6 Alert &rarr; Phase 8 Workload Safeguard Pipeline
+              Confidence-Aware Alert &rarr; Workload Safeguard Pipeline
             </h3>
             <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-950 text-cyan-300 border border-cyan-800 font-mono">
               Live Bridge ({liveAlerts.length} Alerts Ingested)
